@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { 
+import axios from 'axios';
+import {
     Router,
     Route,
     Link,
@@ -9,6 +10,8 @@ import {
     hashHistory
     } from 'react-router';
 import '../scss/style.scss';
+
+
 
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -65,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function(){
     class Image extends Component {
         render() {
             return (
-                <div>    
+                <div>
                 </div>
             );
         }
@@ -105,6 +108,14 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // assembled details components
     class Details extends Component {
+
+        handleFileUpload(proxy) {
+          let data = new FormData();
+          data.append('file', proxy.currentTarget.files[0]);
+          data.append('name', 'Awesome Cat Pic');
+          axios.post('http://localhost:9090/file', data);
+        }
+
         render() {
             return (
                 <div className="image">
@@ -115,7 +126,10 @@ document.addEventListener('DOMContentLoaded', function(){
                     </div>
                     <EditComment/>
                     <Remove/>
+                    <input type="file" onChange={this.handleFileUpload} />
+
                 </div>
+
             );
         }
     }
@@ -125,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function(){
         render() {
             return (
                 <div>
-                    
+
                 </div>
             );
         }
@@ -135,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function(){
         render() {
             return (
                 <div>
-                    
+
                 </div>
             );
         }
@@ -156,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function(){
         render() {
             return (
                 <div>
-                    
+
                 </div>
             );
         }
@@ -166,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function(){
         render() {
             return (
                 <div>
-                    
+
                 </div>
             );
         }
@@ -176,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function(){
         render() {
             return (
                 <div>
-                    
+
                 </div>
             );
         }
@@ -264,6 +278,6 @@ document.addEventListener('DOMContentLoaded', function(){
     ReactDOM.render(
         <App/>,
         document.getElementById('app')
-    ); 
+    );
 
 });
