@@ -1,3 +1,5 @@
 node_modules
 konspekt
 files
+.node-persist
+

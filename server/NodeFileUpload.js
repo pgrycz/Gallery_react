@@ -4,8 +4,14 @@ const multer = require('multer');
 const morgan = require('morgan');
 const path = require('path');
 const fs = require('fs');
+const persistence = require('node-persist');
+const util = require('util');
 
 const app = express();
+
+persistence.init({
+  logging: true
+})
 
 const PORT = process.env.PORT || 9090;
 
@@ -14,9 +20,7 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 
 let filesDir = path.resolve(__dirname, '..', 'files');
 app.get('/files', (req, res) => {
-  fs.readdir(filesDir, (err, files) => {
-    res.send(JSON.stringify(files));
-  })
+  res.send(persistence.values());
 });
 
 app.get('/file/:fileName', (req, res) => {
@@ -33,9 +37,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.post('/file', upload.single('file'), (req, res) => {
- console.log("/files " + res);
- res.header('Access-Control-Allow-Origin',null);
- res.send('OK');
+  persistence.setItemSync(req.file.filename, {
+    "filename": req.file.filename,
+    "description": req.body.description,
+    "tags": req.body.tags != null ? req.body.tags.split(",") : []
+  });
+  res.header('Access-Control-Allow-Origin',null);
+  res.send('OK');
 });
 
 app.listen(PORT, () => {
