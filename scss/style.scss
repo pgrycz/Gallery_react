@@ -22,39 +22,40 @@
     font-size: 1.5rem;
 }
 
-// .image {
-//     position: absolute;
-//     margin: auto;
-//     top: 0;
-//     bottom: 0;
-//     left: 0;
-//     right: 0;
-//     width: 1000px;
-//     height: 600px;
-//     border: 1px solid black;
-// }
+.image__container {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 1000px;
+    height: 600px;
+    border: 1px solid black;
+}
 
-// .edit {
-//     width: 200px;
-//     height: 20px;
-//     border: 1px solid black;
-//     margin-right: 7px;
-// }
+.edit {
+    width: 200px;
+    height: 23px;
+    border: 1px solid black;
+    margin-right: 7px;
+}
 
-// textarea {
-//     position: absolute;
-//     bottom: -60px;
-//     left: 418px;
-//     width: 500px;
-//     height: 50px;
-// }
+textarea {
+    position: absolute;
+    bottom: -65px;
+    left: 308px;
+    width: 600px;
+    height: 55px;
+}
 
 .flex {
+    display: flex;
     position: absolute;
     flex-flow: column;
     justify-content: space-between;
-    height: 50px;
-    bottom: -58px;
+    height: 56px;
+    bottom: -64px;
     left: -1px;
 }
 
@@ -73,4 +74,35 @@
     text-decoration: none;
     font-size: 1.5rem;
     width: 300px;
+    &:nth-of-type(1) {
+        color: white;
+    }
+}
+
+.remove {
+    position: absolute;
+    bottom: -33px;
+    right: -1px;
+    padding: 3px 15px;
+}
+
+.close {
+    position: absolute;
+    bottom: -65px;
+    right: -1px;
+    padding: 3px 23px;
+}
+
+.update__name {
+    position: absolute;
+    bottom: 31px;
+    left: 209px;
+    padding: 3px 23px;
+}
+
+.update__tag {
+    position: absolute;
+    bottom: -1px;
+    left: 209px;
+    padding: 3px 23px;
 }

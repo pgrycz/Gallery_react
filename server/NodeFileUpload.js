@@ -31,7 +31,7 @@ const storage = multer.diskStorage({
   destination: './files',
   filename(req, file, cb) {
     cb(null, `${file.originalname}`);
-  },
+  }
 });
 
 const upload = multer({ storage });
@@ -42,7 +42,7 @@ app.post('/file', upload.single('file'), (req, res) => {
     "description": req.body.description,
     "tags": req.body.tags != null ? req.body.tags.split(",") : []
   });
-  res.header('Access-Control-Allow-Origin',null);
+  res.header('Access-Control-Allow-Origin','*');
   res.send('OK');
 });
 
