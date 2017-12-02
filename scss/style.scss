@@ -22,32 +22,32 @@
     font-size: 1.5rem;
 }
 
-.image {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 1000px;
-    height: 600px;
-    border: 1px solid black;
-}
+// .image {
+//     position: absolute;
+//     margin: auto;
+//     top: 0;
+//     bottom: 0;
+//     left: 0;
+//     right: 0;
+//     width: 1000px;
+//     height: 600px;
+//     border: 1px solid black;
+// }
 
-.edit {
-    width: 200px;
-    height: 20px;
-    border: 1px solid black;
-    margin-right: 7px;
-}
+// .edit {
+//     width: 200px;
+//     height: 20px;
+//     border: 1px solid black;
+//     margin-right: 7px;
+// }
 
-textarea {
-    position: absolute;
-    bottom: -60px;
-    left: 418px;
-    width: 500px;
-    height: 50px;
-}
+// textarea {
+//     position: absolute;
+//     bottom: -60px;
+//     left: 418px;
+//     width: 500px;
+//     height: 50px;
+// }
 
 .flex {
     position: absolute;
@@ -58,3 +58,19 @@ textarea {
     left: -1px;
 }
 
+.menu__centering {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 200px;
+    margin-top: 14px;
+}
+
+.menu__inputs--upload {
+    color: black;
+    font-family: arial, sans-serif;
+    text-decoration: none;
+    font-size: 1.5rem;
+    width: 300px;
+}

@@ -14312,22 +14312,128 @@ document.addEventListener('DOMContentLoaded', function () {
     var StartHere = function (_Component2) {
         _inherits(StartHere, _Component2);
 
-        function StartHere() {
+        function StartHere(props) {
             _classCallCheck(this, StartHere);
 
-            return _possibleConstructorReturn(this, (StartHere.__proto__ || Object.getPrototypeOf(StartHere)).apply(this, arguments));
+            var _this2 = _possibleConstructorReturn(this, (StartHere.__proto__ || Object.getPrototypeOf(StartHere)).call(this, props));
+
+            _this2.show = function () {
+                if (_this2.state.style.display === 'block') {
+                    _this2.setState({
+                        style: {
+                            display: 'none',
+                            position: 'absolute',
+                            width: '400px',
+                            height: '230px',
+                            backgroundColor: 'black',
+                            left: '350px',
+                            right: 0,
+                            top: '100px',
+                            bottom: 0,
+                            borderRadius: '10px'
+                        }
+                    });
+                } else {
+                    _this2.setState({
+                        style: {
+                            display: 'block',
+                            position: 'absolute',
+                            width: '400px',
+                            height: '230px',
+                            backgroundColor: 'black',
+                            left: '350px',
+                            right: 0,
+                            top: '100px',
+                            bottom: 0,
+                            borderRadius: '10px'
+                        }
+                    });
+                }
+            };
+
+            _this2.changeName = function (event) {
+                console.log(_this2);
+                _this2.setState({
+                    name: event.target.value
+                });
+            };
+
+            _this2.changeTag = function (event) {
+                console.log(_this2);
+                _this2.setState({
+                    tag: event.target.value
+                });
+            };
+
+            _this2.state = {
+                style: {
+                    display: 'none',
+                    position: 'absolute',
+                    width: '400px',
+                    height: '230px',
+                    backgroundColor: 'black',
+                    left: '350px',
+                    right: 0,
+                    top: '100px',
+                    bottom: 0,
+                    borderRadius: '10px'
+                },
+                name: '',
+                tag: ''
+            };
+            return _this2;
         }
 
         _createClass(StartHere, [{
+            key: 'handleFileUpload',
+            value: function handleFileUpload(proxy) {
+                var data = new FormData();
+                data.append('file', event.target.files[0]);
+                data.append('name', this.state.name);
+                data.append('tag', this.state.tag);
+                _axios2.default.post('http://localhost:9090/file', data);
+                debugger;
+            }
+        }, {
             key: 'render',
             value: function render() {
                 return _react2.default.createElement(
-                    'li',
+                    'ul',
                     null,
                     _react2.default.createElement(
-                        'a',
-                        { href: '#', className: 'menu__font' },
-                        'Add image'
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'a',
+                            { href: '#', className: 'menu__font', onClick: this.show },
+                            'Add image'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        { style: this.state.style },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'menu__centering' },
+                            _react2.default.createElement('input', { type: 'file',
+                                className: 'menu__inputs--upload' }),
+                            _react2.default.createElement('input', { type: 'text',
+                                className: 'menu__inputs--upload',
+                                value: this.state.name,
+                                onChange: this.changeName,
+                                id: 'image__name',
+                                placeholder: 'Dodaj nazw\u0119' }),
+                            _react2.default.createElement('input', { type: 'text',
+                                className: 'menu__inputs--upload',
+                                value: this.state.tag,
+                                onChange: this.changeTag,
+                                id: 'tag__name',
+                                placeholder: 'Dodaj tag' }),
+                            _react2.default.createElement('input', { type: 'submit',
+                                value: 'Wy\u015Blij',
+                                className: 'menu__inputs--upload',
+                                onChange: this.handleFileUpload })
+                        )
                     )
                 );
             }
@@ -14378,7 +14484,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 return _react2.default.createElement(
                     'li',
                     null,
-                    _react2.default.createElement('input', { className: 'fa fa-search search', 'aria-hidden': 'true', type: 'text', placeholder: ' \uF002 Search' })
+                    _react2.default.createElement('input', { className: 'fa fa-search search',
+                        'aria-hidden': 'true',
+                        type: 'text',
+                        placeholder: ' \uF002 Search' })
                 );
             }
         }]);
@@ -14451,7 +14560,7 @@ document.addEventListener('DOMContentLoaded', function () {
             value: function render() {
                 return _react2.default.createElement(
                     'div',
-                    { contentEditable: 'true', className: 'edit' },
+                    { className: 'edit' },
                     'nazwa'
                 );
             }
@@ -14474,7 +14583,7 @@ document.addEventListener('DOMContentLoaded', function () {
             value: function render() {
                 return _react2.default.createElement(
                     'div',
-                    { contentEditable: 'true', className: 'edit' },
+                    { className: 'edit' },
                     'tag'
                 );
             }
@@ -14538,15 +14647,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         _createClass(Details, [{
-            key: 'handleFileUpload',
-            value: function handleFileUpload(proxy) {
-                var data = new FormData();
-                data.append('file', proxy.currentTarget.files[0]);
-                data.append('description', 'Awesome Cat Pic');
-                data.append('tags', ['tag2', 'tag2']);
-                _axios2.default.post('http://localhost:9090/file', data);
-            }
-        }, {
             key: 'render',
             value: function render() {
                 return _react2.default.createElement(
@@ -14560,8 +14660,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         _react2.default.createElement(EditTag, null)
                     ),
                     _react2.default.createElement(EditComment, null),
-                    _react2.default.createElement(Remove, null),
-                    _react2.default.createElement('input', { type: 'file', onChange: this.handleFileUpload })
+                    _react2.default.createElement(Remove, null)
                 );
             }
         }]);
@@ -29219,7 +29318,7 @@ exports = module.exports = __webpack_require__(270)(true);
 
 
 // module
-exports.push([module.i, "* {\n  margin: 0;\n  padding: 0; }\n\n.header {\n  display: inline-flex;\n  justify-content: space-around;\n  padding: 20px 0;\n  background-color: black;\n  width: 100%; }\n\n.menu__font {\n  color: white;\n  font-family: arial, sans-serif;\n  text-decoration: none;\n  font-size: 1.5rem; }\n\n.search {\n  font-size: 1.5rem; }\n\n.image {\n  position: absolute;\n  margin: auto;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  width: 1000px;\n  height: 600px;\n  border: 1px solid black; }\n\n.edit {\n  width: 200px;\n  height: 20px;\n  border: 1px solid black;\n  margin-right: 7px; }\n\ntextarea {\n  position: absolute;\n  bottom: -60px;\n  left: 418px;\n  width: 500px;\n  height: 50px; }\n\n.flex {\n  position: absolute;\n  flex-flow: column;\n  justify-content: space-between;\n  height: 50px;\n  bottom: -58px;\n  left: -1px; }\n", "", {"version":3,"sources":["/home/rkrysinski/Desktop/repositories/Gallery_react/scss/scss/style.scss"],"names":[],"mappings":"AAAA;EACI,UAAS;EACT,WAAU,EACb;;AAED;EACI,qBAAoB;EACpB,8BAA6B;EAC7B,gBAAe;EACf,wBAAuB;EACvB,YAAW,EACd;;AAED;EACI,aAAY;EACZ,+BAA8B;EAC9B,sBAAqB;EACrB,kBAAiB,EACpB;;AAED;EACI,kBAAiB,EACpB;;AAED;EACI,mBAAkB;EAClB,aAAY;EACZ,OAAM;EACN,UAAS;EACT,QAAO;EACP,SAAQ;EACR,cAAa;EACb,cAAa;EACb,wBAAuB,EAC1B;;AAED;EACI,aAAY;EACZ,aAAY;EACZ,wBAAuB;EACvB,kBAAiB,EACpB;;AAED;EACI,mBAAkB;EAClB,cAAa;EACb,YAAW;EACX,aAAY;EACZ,aAAY,EACf;;AAED;EACI,mBAAkB;EAClB,kBAAiB;EACjB,+BAA8B;EAC9B,aAAY;EACZ,cAAa;EACb,WAAU,EACb","file":"style.scss","sourcesContent":["* {\n    margin: 0;\n    padding: 0;\n}\n\n.header {\n    display: inline-flex;\n    justify-content: space-around;\n    padding: 20px 0;\n    background-color: black;\n    width: 100%;\n}\n\n.menu__font {\n    color: white;\n    font-family: arial, sans-serif;\n    text-decoration: none;\n    font-size: 1.5rem;\n}\n\n.search {\n    font-size: 1.5rem;\n}\n\n.image {\n    position: absolute;\n    margin: auto;\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    width: 1000px;\n    height: 600px;\n    border: 1px solid black;\n}\n\n.edit {\n    width: 200px;\n    height: 20px;\n    border: 1px solid black;\n    margin-right: 7px;\n}\n\ntextarea {\n    position: absolute;\n    bottom: -60px;\n    left: 418px;\n    width: 500px;\n    height: 50px;\n}\n\n.flex {\n    position: absolute;\n    flex-flow: column;\n    justify-content: space-between;\n    height: 50px;\n    bottom: -58px;\n    left: -1px;\n}\n\n"],"sourceRoot":""}]);
+exports.push([module.i, "* {\n  margin: 0;\n  padding: 0; }\n\n.header {\n  display: inline-flex;\n  justify-content: space-around;\n  padding: 20px 0;\n  background-color: black;\n  width: 100%; }\n\n.menu__font {\n  color: white;\n  font-family: arial, sans-serif;\n  text-decoration: none;\n  font-size: 1.5rem; }\n\n.search {\n  font-size: 1.5rem; }\n\n.flex {\n  position: absolute;\n  flex-flow: column;\n  justify-content: space-between;\n  height: 50px;\n  bottom: -58px;\n  left: -1px; }\n\n.menu__centering {\n  display: flex;\n  flex-flow: column;\n  justify-content: space-around;\n  align-items: center;\n  height: 200px;\n  margin-top: 14px; }\n\n.menu__inputs--upload {\n  color: black;\n  font-family: arial, sans-serif;\n  text-decoration: none;\n  font-size: 1.5rem;\n  width: 300px; }\n", "", {"version":3,"sources":["/home/pawel/Pulpit/Coderslab/Gallery_react/scss/scss/style.scss"],"names":[],"mappings":"AAAA;EACI,UAAS;EACT,WAAU,EACb;;AAED;EACI,qBAAoB;EACpB,8BAA6B;EAC7B,gBAAe;EACf,wBAAuB;EACvB,YAAW,EACd;;AAED;EACI,aAAY;EACZ,+BAA8B;EAC9B,sBAAqB;EACrB,kBAAiB,EACpB;;AAED;EACI,kBAAiB,EACpB;;AA6BD;EACI,mBAAkB;EAClB,kBAAiB;EACjB,+BAA8B;EAC9B,aAAY;EACZ,cAAa;EACb,WAAU,EACb;;AAED;EACI,cAAa;EACb,kBAAiB;EACjB,8BAA6B;EAC7B,oBAAmB;EACnB,cAAa;EACb,iBAAgB,EACnB;;AAED;EACI,aAAY;EACZ,+BAA8B;EAC9B,sBAAqB;EACrB,kBAAiB;EACjB,aAAY,EACf","file":"style.scss","sourcesContent":["* {\n    margin: 0;\n    padding: 0;\n}\n\n.header {\n    display: inline-flex;\n    justify-content: space-around;\n    padding: 20px 0;\n    background-color: black;\n    width: 100%;\n}\n\n.menu__font {\n    color: white;\n    font-family: arial, sans-serif;\n    text-decoration: none;\n    font-size: 1.5rem;\n}\n\n.search {\n    font-size: 1.5rem;\n}\n\n// .image {\n//     position: absolute;\n//     margin: auto;\n//     top: 0;\n//     bottom: 0;\n//     left: 0;\n//     right: 0;\n//     width: 1000px;\n//     height: 600px;\n//     border: 1px solid black;\n// }\n\n// .edit {\n//     width: 200px;\n//     height: 20px;\n//     border: 1px solid black;\n//     margin-right: 7px;\n// }\n\n// textarea {\n//     position: absolute;\n//     bottom: -60px;\n//     left: 418px;\n//     width: 500px;\n//     height: 50px;\n// }\n\n.flex {\n    position: absolute;\n    flex-flow: column;\n    justify-content: space-between;\n    height: 50px;\n    bottom: -58px;\n    left: -1px;\n}\n\n.menu__centering {\n    display: flex;\n    flex-flow: column;\n    justify-content: space-around;\n    align-items: center;\n    height: 200px;\n    margin-top: 14px;\n}\n\n.menu__inputs--upload {\n    color: black;\n    font-family: arial, sans-serif;\n    text-decoration: none;\n    font-size: 1.5rem;\n    width: 300px;\n}"],"sourceRoot":""}]);
 
 // exports
 

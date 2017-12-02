@@ -11,8 +11,6 @@ import {
     } from 'react-router';
 import '../scss/style.scss';
 
-
-
 document.addEventListener('DOMContentLoaded', function(){
 
     // menuheader components **********************************
@@ -25,9 +23,105 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     class StartHere extends Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                style: {
+                    display: 'none',
+                    position: 'absolute',
+                    width: '400px',
+                    height: '230px',
+                    backgroundColor: 'black',
+                    left: '350px',
+                    right: 0,
+                    top: '100px',
+                    bottom: 0,
+                    borderRadius: '10px'
+                },
+                name: '',
+                tag: ''
+            }
+        }
+        show = () => {
+            if (this.state.style.display === 'block') {
+                this.setState ( {
+                    style: {
+                        display: 'none',
+                        position: 'absolute',
+                        width: '400px',
+                        height: '230px',
+                        backgroundColor: 'black',
+                        left: '350px',
+                        right: 0,
+                        top: '100px',
+                        bottom: 0,
+                        borderRadius: '10px'
+                    }
+                } );
+            } else {
+                this.setState ( {
+                    style: {
+                        display: 'block',
+                        position: 'absolute',
+                        width: '400px',
+                        height: '230px',
+                        backgroundColor: 'black',
+                        left: '350px',
+                        right: 0,
+                        top: '100px',
+                        bottom: 0,
+                        borderRadius: '10px'
+                    }
+                } );
+            }
+        }
+        changeName = (event) => {
+            console.log(this);
+            this.setState( {
+                name: event.target.value
+            } );
+        }
+        changeTag = (event) => {
+            console.log(this);
+            this.setState( {
+                tag: event.target.value
+            } );
+        }
+        handleFileUpload(proxy) {
+          let data = new FormData();
+          data.append('file', event.target.files[0]);
+          data.append('name', this.state.name);
+          data.append('tag', this.state.tag);
+          axios.post('http://localhost:9090/file', data);
+          debugger;
+        }
         render() {
             return (
-                 <li><a href="#" className="menu__font">Add image</a></li>
+                <ul>
+                    <li><a href="#" className="menu__font" onClick={this.show}>Add image</a></li>
+                    <li style={this.state.style}>
+                        <div className="menu__centering">
+                            <input type="file" 
+                                   className="menu__inputs--upload"/>
+                            <input type="text" 
+                                   className="menu__inputs--upload" 
+                                   value={this.state.name} 
+                                   onChange={this.changeName} 
+                                   id="image__name" 
+                                   placeholder="Dodaj nazwę"/>
+                            <input type="text" 
+                                   className="menu__inputs--upload" 
+                                   value={this.state.tag} 
+                                   onChange={this.changeTag} 
+                                   id="tag__name" 
+                                   placeholder="Dodaj tag"/>
+                            <input type="submit" 
+                                   value="Wyślij" 
+                                   className="menu__inputs--upload"
+                                   onChange={this.handleFileUpload} />
+                        </div>
+                    </li>
+                </ul>
             );
         }
     }
@@ -44,7 +138,10 @@ document.addEventListener('DOMContentLoaded', function(){
         render() {
             return (
                 <li>
-                    <input className="fa fa-search search" aria-hidden="true" type="text" placeholder=" &#xf002; Search"/>
+                    <input className="fa fa-search search"
+                           aria-hidden="true" 
+                           type="text" 
+                           placeholder=" &#xf002; Search"/>
                 </li>
             );
         }
@@ -77,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function(){
     class EditName extends Component {
         render() {
             return (
-                <div contentEditable="true" className="edit">nazwa</div>
+                <div className="edit">nazwa</div>
             );
         }
     }
@@ -85,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function(){
     class EditTag extends Component {
         render() {
             return (
-                <div contentEditable="true" className="edit">tag</div>
+                <div className="edit">tag</div>
             );
         }
     }
@@ -109,13 +206,6 @@ document.addEventListener('DOMContentLoaded', function(){
     // assembled details components
     class Details extends Component {
 
-        handleFileUpload(proxy) {
-          let data = new FormData();
-          data.append('file', proxy.currentTarget.files[0]);
-          data.append('name', 'Awesome Cat Pic');
-          axios.post('http://localhost:9090/file', data);
-        }
-
         render() {
             return (
                 <div className="image">
@@ -126,8 +216,6 @@ document.addEventListener('DOMContentLoaded', function(){
                     </div>
                     <EditComment/>
                     <Remove/>
-                    <input type="file" onChange={this.handleFileUpload} />
-
                 </div>
 
             );
