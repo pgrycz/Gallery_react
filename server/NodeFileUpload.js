@@ -37,12 +37,18 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.post('/file', upload.single('file'), (req, res) => {
+  res.header('Access-Control-Allow-Origin','*');
+  if (req.file === undefined)
+  {
+    res.status(400);
+    res.send("Invalid request: file content not provided.");
+    return;
+  }
   persistence.setItemSync(req.file.filename, {
     "filename": req.file.filename,
     "description": req.body.description,
     "tags": req.body.tags != null ? req.body.tags.split(",") : []
   });
-  res.header('Access-Control-Allow-Origin','*');
   res.send('OK');
 });
 
