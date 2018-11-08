@@ -1,4 +1,4 @@
-# Gallery_react
+# Gallery_react (postponed project, will be continued soon)
 
 # Images server API (`server/NodeFileUpload.js`)
 * Start the server `node server/NodeFileUpload.js`
